@@ -1,0 +1,69 @@
+@startuml Market Application Architecture
+
+' Style definitions
+skinparam componentStyle uml2
+skinparam backgroundColor white
+skinparam handwritten false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam component {
+    BackgroundColor LightBlue
+    BorderColor DarkBlue
+    ArrowColor DarkBlue
+}
+
+' Core components
+package "Core" {
+    [Account] as Account
+    [Wallet] as Wallet
+    [Transaction] as Transaction
+    [Contract] as Contract
+}
+
+package "Financial" {
+    [Asset] as Asset
+    [Liability] as Liability
+    [Balance] as Balance
+}
+
+package "Accounting" {
+    [Ledger] as Ledger
+    [Journal] as Journal
+    [JournalEntry] as JournalEntry
+    [TrialBalance] as TrialBalance
+    [IncomeStatement] as IncomeStatement
+    [CashFlowStatement] as CashFlowStatement
+}
+
+package "Utils" {
+    [Decimal] as Decimal
+    [IDGenerator] as IDGenerator
+}
+
+' Relationships
+Account "1" -- "*" Wallet : manages
+Wallet "1" -- "*" Transaction : contains
+Wallet "1" -- "*" Contract : holds
+Contract "1" -- "1" Asset : represents
+Contract "1" -- "1" Liability : represents
+Wallet "1" -- "1" Balance : maintains
+
+Ledger "1" -- "*" JournalEntry : contains
+Journal "1" -- "*" JournalEntry : contains
+JournalEntry "1" -- "*" Transaction : records
+
+TrialBalance ..> Account : uses
+IncomeStatement ..> Account : uses
+CashFlowStatement ..> Account : uses
+
+Account ..> Decimal : uses
+Wallet ..> Decimal : uses
+Transaction ..> Decimal : uses
+Balance ..> Decimal : uses
+
+Account ..> IDGenerator : uses
+Wallet ..> IDGenerator : uses
+Contract ..> IDGenerator : uses
+Transaction ..> IDGenerator : uses
+
+@enduml 

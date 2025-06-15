@@ -1,0 +1,55 @@
+@startuml Transaction Flow
+
+' Style definitions
+skinparam sequence {
+    ArrowColor DarkBlue
+    LifeLineBorderColor DarkBlue
+    LifeLineBackgroundColor LightBlue
+    ParticipantBorderColor DarkBlue
+    ParticipantBackgroundColor LightBlue
+    ParticipantFontName Arial
+    ParticipantFontSize 12
+}
+
+actor User
+participant "Account" as Account
+participant "Wallet" as Wallet
+participant "Transaction" as Transaction
+participant "Journal" as Journal
+participant "Ledger" as Ledger
+
+User -> Account: createTransaction()
+activate Account
+
+Account -> Wallet: addTransaction()
+activate Wallet
+
+Wallet -> Transaction: create()
+activate Transaction
+Transaction --> Wallet: return transaction
+deactivate Transaction
+
+Wallet -> Wallet: updateBalance()
+Wallet --> Account: return success
+deactivate Wallet
+
+Account -> Journal: addEntry()
+activate Journal
+
+Journal -> JournalEntry: create()
+activate JournalEntry
+JournalEntry --> Journal: return entry
+deactivate JournalEntry
+
+Journal -> Ledger: addEntry()
+activate Ledger
+Ledger --> Journal: return success
+deactivate Ledger
+
+Journal --> Account: return success
+deactivate Journal
+
+Account --> User: return success
+deactivate Account
+
+@enduml 

@@ -1,0 +1,45 @@
+# Build artifacts
+/build/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.o
+*.obj
+*.so
+*.dll
+*.exe
+*.out
+*.a
+*.lib
+*.pch
+*.pdb
+*.ilk
+*.user
+*.ncb
+*.sdf
+*.opensdf
+*.VC.db
+*.VC.opendb
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*~
+.vscode/
+.idea/
+*.code-workspace
+
+# Logs
+*.log
+
+# Generated files
+compile_commands.json
+Testing/
+CTestTestfile.cmake
+
+# Ignore documentation build output
+/docs/_build/ 
