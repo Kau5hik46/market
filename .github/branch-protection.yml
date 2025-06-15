@@ -1,0 +1,58 @@
+# Branch Protection Rules
+
+# Main Branch (Production)
+main:
+  required_status_checks:
+    strict: true
+    contexts:
+      - build
+      - test
+      - lint
+  enforce_admins: true
+  required_pull_request_reviews:
+    required_approving_review_count: 2
+    dismiss_stale_reviews: true
+    require_code_owner_reviews: true
+  restrictions: null
+
+# Beta Branch (Pre-release)
+beta:
+  required_status_checks:
+    strict: true
+    contexts:
+      - build
+      - test
+  enforce_admins: false
+  required_pull_request_reviews:
+    required_approving_review_count: 1
+    dismiss_stale_reviews: true
+  restrictions: null
+
+# Dev Branch (Development)
+dev:
+  required_status_checks:
+    strict: false
+    contexts:
+      - build
+  enforce_admins: false
+  required_pull_request_reviews:
+    required_approving_review_count: 1
+    dismiss_stale_reviews: false
+  restrictions: null
+
+# Branch Name Patterns
+branch_name_patterns:
+  - pattern: '^main$'
+    description: 'Production branch'
+  - pattern: '^beta$'
+    description: 'Pre-release branch'
+  - pattern: '^dev$'
+    description: 'Development branch'
+  - pattern: '^feature/[a-z0-9-]+$'
+    description: 'Feature branches'
+  - pattern: '^bugfix/[a-z0-9-]+$'
+    description: 'Bug fix branches'
+  - pattern: '^hotfix/[a-z0-9-]+$'
+    description: 'Hot fix branches'
+  - pattern: '^release/v[0-9]+\.[0-9]+\.[0-9]+$'
+    description: 'Release branches' 
